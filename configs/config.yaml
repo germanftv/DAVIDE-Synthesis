@@ -1,0 +1,53 @@
+DAVIDE-raw:
+  ROOT: /path/to/DAVIDE-raw
+  depth_folder: depth
+  confidence_folder: confidence
+  intrinsics: Frames.txt
+  camera_info: ARposes.txt
+
+DAVIDE-tmp:
+  ROOT: /path/to/DAVIDE-tmp
+  rgb_folder: rgb_original
+  VFI_folder: rgb-VFI
+  blur_folder: blurry
+  sharp_folder: sharp
+  depth_folder: depth
+  confidence_folder: conf-depth
+  mono_depth_folder: mono-depth
+  camera_intrinsics: intrinsics.csv
+  camera_poses: poses.csv
+  imu_data: imu.csv
+  sample_videos:
+    folder: sample-videos
+    sample_vfi: VFI.mp4
+    sample_blur_sharp: blur_sharp.mp4
+    sample_rgb_depth: rgb_depth.mp4
+    sample_sync_summary: sync_summary.mp4
+
+DAVIDE:
+  ROOT: /path/to/DAVIDE
+  annotations: ./misc/DAVIDE-annotations.csv
+  blur_folder: blur
+  sharp_folder: gt
+  depth_folder: depth
+  mono_depth_folder: mono-depth
+  confidence_folder: conf-depth
+  intrinsics_folder: intrinsics
+  poses_folder: poses
+  imu_folder: imu
+    
+
+DATA-GEN-PARAMS:
+  dp_log: dp-log/DAVIDE-DP_log.csv
+  num_frames: 4
+  sr_factor: 8 
+  XVFI_pretrained: X4K1000FPS
+  XVFI_config: configs/xvfi_config.yaml
+
+
+MONO-DEPTH:
+  checkpoint: vinvino02/glpn-nyu
+  
+
+CRF_calibration:
+  crf_file: crf_calibration/crf_room02.pt

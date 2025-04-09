@@ -1,0 +1,9 @@
+*tmp/
+results/
+dp-log/
+**/__pycache__
+tmp_**
+**/logs*/*
+.idea/
+**/aligned/
+.vscode/
