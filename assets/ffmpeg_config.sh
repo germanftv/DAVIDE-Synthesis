@@ -1,0 +1,11 @@
+./configure \
+  --prefix=/path_to_my/ffmpeg_build \
+  --bindir=/path_to_my/bin \
+  --enable-gpl \
+  --enable-nonfree \
+  --enable-libfreetype \
+  --enable-libfontconfig \
+  --enable-libfribidi \
+  --enable-libharfbuzz \
+  --enable-libx264 \
+  --enable-libx265
