@@ -17,7 +17,8 @@ This project contains the source code to synthesize the Depth-Aware VIdeo DEblur
 
 1. [Getting Started](#getting-started)
 2. [Camera Response Function](#camera-response-function)
-3. [Citation](#citation)
+3. [Other Resources](#other-resources)
+4. [Citation](#citation)
 
 ## Getting started
 ### Requirements:
@@ -141,6 +142,14 @@ For blur synthesis, we estimated the Camera Response Function (CRF) of our recor
     ```
 
 For more details about the CRF calibration process, please refer to Appendix A.1 of our [paper](https://arxiv.org/abs/2409.01274).
+
+## Other Resources
+
+1. [**Benchmark Repository**](https://github.com/germanftv/DAVIDE-Benckmark): Contains the source code for benchmarking deep video deblurring methods on the DAVIDE dataset.
+
+2. [**Data Capture App**](https://github.com/JussiKalliola/DAVIDE-app): Provides the source code for the iOS application develped to capture synchronized RGB-D videos on iPhone devices.
+
+3. [**Data Access Form**](https://docs.google.com/forms/d/e/1FAIpQLSeQ2w4xsoIkzJ6kNseSiHkMaj303_tXRs2v23wqF3chfSF1FQ/viewform?usp=header): Submit this form to request access to the released DAVIDE dataset and related resources.
 
 ## Citation
 If you find our work useful in your research, please cite:
