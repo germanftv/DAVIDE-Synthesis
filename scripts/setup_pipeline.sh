@@ -22,7 +22,10 @@ if ! conda activate DAVIDE-DP; then
   if ! conda activate DAVIDE-DP; then
     echo "Error: Failed to activate conda environment DAVIDE-DP."
     exit 1
+  else
+    conda deactivate
   fi
+else
   conda deactivate
 fi
 
