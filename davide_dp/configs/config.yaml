@@ -1,12 +1,12 @@
 DAVIDE-raw:
-  ROOT: /path/to/DAVIDE-raw
+  ROOT: ${oc.env:DATA_WORKSPACE}/DAVIDE-raw
   depth_folder: depth
   confidence_folder: confidence
   intrinsics: Frames.txt
   camera_info: ARposes.txt
 
 DAVIDE-tmp:
-  ROOT: /path/to/DAVIDE-tmp
+  ROOT: ${oc.env:DATA_WORKSPACE}/DAVIDE-tmp
   rgb_folder: rgb_original
   VFI_folder: rgb-VFI
   blur_folder: blurry
@@ -25,8 +25,7 @@ DAVIDE-tmp:
     sample_sync_summary: sync_summary.mp4
 
 DAVIDE:
-  ROOT: /path/to/DAVIDE
-  annotations: ./misc/DAVIDE-annotations.csv
+  ROOT: ${oc.env:DATA_WORKSPACE}/DAVIDE
   blur_folder: blur
   sharp_folder: gt
   depth_folder: depth
@@ -35,15 +34,14 @@ DAVIDE:
   intrinsics_folder: intrinsics
   poses_folder: poses
   imu_folder: imu
-    
 
 DATA-GEN-PARAMS:
-  dp_log: dp-log/DAVIDE-DP_log.csv
+  annotations: meta-data/DAVIDE-annotations.csv
+  dp_log: meta-data/DAVIDE-DP_log.db
   num_frames: 4
   sr_factor: 8 
   XVFI_pretrained: X4K1000FPS
-  XVFI_config: configs/xvfi_config.yaml
-
+  XVFI_config: davide_dp/configs/xvfi_config.yaml
 
 MONO-DEPTH:
   checkpoint: vinvino02/glpn-nyu

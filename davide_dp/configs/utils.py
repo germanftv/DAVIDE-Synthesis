@@ -1,10 +1,11 @@
-import yaml
+from omegaconf import OmegaConf
 
 def read_config(config_file:str)->dict:
     # Load config file
-    f = open(config_file, "r")
-    config = yaml.load(f, Loader=yaml.FullLoader)
-    f.close()
+    with open(config_file, 'r') as f:
+        config = OmegaConf.load(f)
+    # Convert to dictionary
+    config = OmegaConf.to_container(config, resolve=True)
     return config
 
 def retrieve_attribute(config_file:str, *args):

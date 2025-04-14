@@ -2,6 +2,8 @@ XVFI_settings:
   - pretrained: Vimeo
     module_scale_factor: 2
     S_tst: 1
+    checkpoint_dir: davide_dp/XVFI/checkpoint_dir
   - pretrained: X4K1000FPS
     module_scale_factor: 4
     S_tst: 5
+    checkpoint_dir: davide_dp/XVFI/checkpoint_dir

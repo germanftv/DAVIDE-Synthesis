@@ -9,8 +9,6 @@ import json
 import torch
 import pandas as pd
 
-from XVFI import denorm255_np
-
 
 # Valid image extensions
 IMG_EXTENSIONS = ['.jpg', '.JPG', '.jpeg', '.JPEG', '.png', '.PNG', '.ppm', '.PPM', '.bmp', '.BMP', '.tif']
@@ -190,6 +188,10 @@ def imread2Tensor(path):
 
 
 def imsaveTensor(path, tensor):
+    def denorm255_np(x):
+        # numpy
+        out = (x + 1.0) / 2.0
+        return out.clip(0.0, 1.0) * 255.0
     img = np.transpose(np.squeeze(denorm255_np(tensor.detach().cpu().numpy())),
                        [1, 2, 0]).astype(np.uint8)
     # reverse order of channels (RGB -> BGR)

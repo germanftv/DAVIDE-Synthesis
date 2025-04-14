@@ -17,7 +17,7 @@ from .utils import CameraIntrinsics
 mpl.rcParams["font.family"] = "serif"
 mpl.rcParams["font.size"] = "22"
 mpl.rcParams["font.sans-serif"] = "Helvetica"
-plt.rcParams['text.usetex'] = True
+# plt.rcParams['text.usetex'] = True
 
 
 FIG_SIZE = (10, 7.5)
@@ -81,9 +81,9 @@ def animate(poses: np.ndarray, intrinsics:CameraIntrinsics, fps:int, factor:int,
         ax.set_xlim((center[0] - max_half_extent, center[0] + max_half_extent))
         ax.set_ylim((center[1] - max_half_extent, center[1] + max_half_extent))
         ax.set_zlim((center[2] - max_half_extent, center[2] + max_half_extent))
-        ax.set_xlabel(r'$\mathrm{x}$ (m)', labelpad=20)
-        ax.set_ylabel(r'$\mathrm{y}$ (m)', labelpad=20)
-        ax.set_zlabel(r'$\mathrm{z}$ (m)', labelpad=20)
+        ax.set_xlabel(r'$x$ (m)', labelpad=20)
+        ax.set_ylabel(r'$y$ (m)', labelpad=20)
+        ax.set_zlabel(r'$z$ (m)', labelpad=20)
         ax.view_init(vertical_axis='x', azim=-135 ) #, elev=30)
 
     # Save animation

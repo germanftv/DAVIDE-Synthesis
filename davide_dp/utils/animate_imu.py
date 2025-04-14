@@ -12,7 +12,7 @@ import matplotlib as mpl
 mpl.rcParams["font.family"] = "serif"
 mpl.rcParams["font.size"] = "22"
 mpl.rcParams["font.sans-serif"] = "Helvetica"
-plt.rcParams['text.usetex'] = True
+# plt.rcParams['text.usetex'] = True
 
 
 FIG_SIZE = (10, 7.5)

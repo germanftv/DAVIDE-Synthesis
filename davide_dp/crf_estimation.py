@@ -6,7 +6,8 @@ import argparse
 import torch
 import matplotlib.pyplot as plt
 from tqdm import tqdm
-from configs import read_config
+
+from davide_dp.configs import read_config
 
 
 BORDER_CROP = 16
@@ -111,6 +112,7 @@ def parse_args(argv):
     parser.add_argument('-i', "--images", type=str, required=True, help='Directory of images for CRF estimation')
     parser.add_argument('-e', "--exposures", type=str, required=True, help='Path to file containing exposure times')
     parser.add_argument('-f', "--filename", type=str, required=True, help='Output crf file name')
+    parser.add_argument('-s', "--save_path", type=str, default=SAVE_PATH, help='Path to save the CRF file and plot')
 
     args = parser.parse_args(argv)
     return args
@@ -119,6 +121,8 @@ def parse_args(argv):
 def main(argv=None):
     # Parse arguments
     args = parse_args(argv)
+    SAVE_PATH = args.save_path
+    os.makedirs(SAVE_PATH, exist_ok=True)
     plot_file = os.path.join(SAVE_PATH, args.filename + '.png')
     crf_file = os.path.join(SAVE_PATH, args.filename + '.pth')
 

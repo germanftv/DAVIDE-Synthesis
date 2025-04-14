@@ -7,3 +7,8 @@ tmp_**
 .idea/
 **/aligned/
 .vscode/
+*.egg-info/
+*.egg
+*.pt
+*.pth
+*.db

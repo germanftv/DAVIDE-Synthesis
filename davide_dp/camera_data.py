@@ -8,8 +8,8 @@ import argparse
 from pytransform3d import transformations
 from pytransform3d import trajectories
 
-from utils import read_txt_data, update_log_step
-from configs import read_config
+from davide_dp.configs import read_config
+from davide_dp.utils import read_txt_data, is_step_complete, log_step_event, update_summary_for_video
 
 
 def parse_args(argv):
@@ -81,10 +81,15 @@ def main(argv):
 
     # Get root directory and video list
     root_dir = config['DAVIDE-raw']['ROOT']
-    video_list = os.listdir(root_dir)
-    video_list.sort()
+    data_annotations_path = config['DATA-GEN-PARAMS']['annotations']
+    annotations = pd.read_csv(data_annotations_path)
+    video_list = annotations['recording'].values.tolist()
     input_video_dir = os.path.join(root_dir, video_list[idx])
     print('Input video dir: ', input_video_dir)
+
+    # Check if step 1 is done
+    if not is_step_complete(dp_step='step_1', videos=video_list[idx], db_path=config['DATA-GEN-PARAMS']['dp_log']):
+        raise ValueError(f"Step 1 is not done yet for video {video_list[idx]}. Check dp log.")
 
     # Input and output paths
     input_intrinsics_file = os.path.join(input_video_dir, config['DAVIDE-raw']['intrinsics'])
@@ -120,10 +125,10 @@ def main(argv):
     print('Intrinsics data exported to: ', output_intrinsics_file)
     print('IMU data exported to: ', output_imu_file)
 
-    # Update info log
-    update_log_step(config['DATA-GEN-PARAMS']['dp_log'], video_list[idx], 5)
-
-
+    # Update dp log
+    log_step_event(video_name=video_list[idx], dp_step='step_5', new_status=1, db_path=config['DATA-GEN-PARAMS']['dp_log'])
+    update_summary_for_video(video_name=video_list[idx], db_path=config['DATA-GEN-PARAMS']['dp_log'])
+    print(f"Step 4 completed for video {video_list[idx]}.")
 
 
 if __name__ == '__main__':

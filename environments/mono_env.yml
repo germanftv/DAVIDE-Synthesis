@@ -1,0 +1,20 @@
+channels:
+  - anaconda
+  - conda-forge
+dependencies:
+  - python=3.8
+  - scipy
+  - numpy
+  - scikit-image
+  - pandas
+  - matplotlib
+  - tqdm
+  - pip
+  - pip:
+    - torch==2.0.1
+    - torchvision==0.15.2
+    - opencv-python
+    - Pillow
+    - omegaconf
+    - pyyaml
+    - transformers

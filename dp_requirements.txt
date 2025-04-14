@@ -1,3 +1,0 @@
-pytransform3d
-opencv-python==4.7.0.72
-cupy-cuda11x

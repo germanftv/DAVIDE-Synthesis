@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH --job-name=RGB-BLUR
+#SBATCH --job-name=Extract-RGB-BLUR
 # slurm logs
 #SBATCH --output=logs/s03/log_%a.txt
 #SBATCH --error=logs/s03/log_%a.txt
-#
+# slurm settings
 #SBATCH --partition=gpu
 #SBATCH --time=04:00:00
 #SBATCH --ntasks=1
@@ -18,4 +18,4 @@ module load cuda
 source ~/env_vars/DAVIDE-DP.sh
 
 cd ..
-srun bash run_03_rgb_blur.sh
+srun bash run_03_rgb_blur.sh $SLURM_ARRAY_TASK_ID --config ./davide_dp/configs/config.yaml

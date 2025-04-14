@@ -8,8 +8,12 @@ from tqdm import tqdm
 from PIL import Image
 from transformers import AutoImageProcessor, AutoModelForDepthEstimation
 
-import utils
-from configs import read_config
+from davide_dp.configs import read_config
+from davide_dp.utils import (
+    is_step_complete,
+    log_step_event,
+    update_summary_for_video
+)
 
 
 def parse_args(argv):
@@ -22,7 +26,6 @@ def parse_args(argv):
     return args
 
 
-
 def main(argv=None):
     # Parse arguments and read config
     args = parse_args(argv)
@@ -33,15 +36,15 @@ def main(argv=None):
 
     # Get root directory and video list
     root_dir = config['DAVIDE-tmp']['ROOT']
-    video_list = os.listdir(root_dir)
-    video_list.sort()
+    data_annotations_path = config['DATA-GEN-PARAMS']['annotations']
+    annotations = pd.read_csv(data_annotations_path)
+    video_list = annotations['recording'].values.tolist()
     input_video_dir = os.path.join(root_dir, video_list[idx])
     print('Input video dir: ', input_video_dir)
 
-    # Check if step 1 is done
-    if not utils.check_log_step(config['DATA-GEN-PARAMS']['dp_log'], video_list[idx], 3):
-        print('Step 3 is not done yet')
-        return
+    # Check if step 3 is done
+    if not is_step_complete(dp_step='step_3', videos=video_list[idx], db_path=config['DATA-GEN-PARAMS']['dp_log']):
+        raise ValueError(f"Step 3 is not done yet for video {video_list[idx]}. Check dp log.")
 
     # Input and output paths
     input_dir = os.path.join(input_video_dir, config['DAVIDE-tmp']['{}_folder'.format(rgb_dir)])
@@ -102,8 +105,10 @@ def main(argv=None):
         output_path = os.path.join(output_dir, file_name)
         depth.save(output_path)
 
-    # Update info log
-    utils.update_log_step(config['DATA-GEN-PARAMS']['dp_log'], video_list[idx], 7)
+    # Update dp log
+    log_step_event(video_name=video_list[idx], dp_step='step_7', new_status=1, db_path=config['DATA-GEN-PARAMS']['dp_log'])
+    update_summary_for_video(video_name=video_list[idx], db_path=config['DATA-GEN-PARAMS']['dp_log'])
+    print(f"Step 7 completed for video {video_list[idx]}.")
 
 
 

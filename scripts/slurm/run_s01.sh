@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH --job-name=VID2RGB
+#SBATCH --job-name=Extract-RGB
 # slurm logs
 #SBATCH --output=logs/s01/log_%a.txt
 #SBATCH --error=logs/s01/log_%a.txt
-#
+# slurm settings
 #SBATCH --partition=small
 #SBATCH --time=01:00:00
 #SBATCH --ntasks=1
@@ -16,4 +16,4 @@ module load ffmpeg
 source ~/env_vars/DAVIDE-DP.sh
 
 cd ..
-srun bash run_01_extract_rgb.sh
+srun bash run_01_extract_rgb.sh $SLURM_ARRAY_TASK_ID --config ./davide_dp/configs/config.yaml

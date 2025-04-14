@@ -8,8 +8,13 @@ import argparse
 from pytransform3d import transformations
 from pytransform3d import trajectories
 
-from utils import read_txt_data, update_log_step
 from configs import read_config
+from davide_dp.utils import (
+    is_step_complete,
+    log_step_event,
+    update_summary_for_video,
+    read_txt_data
+)
 
 
 def parse_args(argv):
@@ -298,8 +303,16 @@ def main(argv):
     input_video_dir = os.path.join(input_root, video_list[idx])
     print('Input video dir: ', input_video_dir)
 
+    # Check previous steps are done
+    for step in range(1, 8):
+        if step == 6:
+            # Step 6 is not required for this script
+            continue
+        if not is_step_complete(dp_step='step_{}'.format(step), videos=video_list[idx], db_path=config['DATA-GEN-PARAMS']['dp_log']):
+            raise ValueError(f"Step {step} is not done yet for video {video_list[idx]}. Check dp log.")
+
     # Read annotations
-    annotations_file = config['DAVIDE']['annotations']
+    annotations_file = config['DATA-GEN-PARAMS']['annotations']
     for _ in range(MAX_ITER):
         try:
             annotations = pd.read_csv(annotations_file)
@@ -315,9 +328,10 @@ def main(argv):
     start_id, end_id = get_frame_ids(video_annotations['start'].values[0], video_annotations['end'].values[0], input_video_dir, config)
 
     if start_id == 0 and end_id == 0:
-        print('Skipping video: ', video_list[idx])
+        print(f'No frames to export for video {video_list[idx]} according to annotations.')
         # Update log
-        update_log_step(config['DATA-GEN-PARAMS']['dp_log'], video_list[idx], 8)
+        log_step_event(video_name=video_list[idx], dp_step='step_8', new_status=1, db_path=config['DATA-GEN-PARAMS']['dp_log'])
+        update_summary_for_video(video_name=video_list[idx], db_path=config['DATA-GEN-PARAMS']['dp_log'])
         return
 
     # Recording name
@@ -348,7 +362,9 @@ def main(argv):
     export_mono_depth_folder(start_id, end_id, input_video_dir, output_root_dir, recording_name, config, rgb_dir)
 
     # Update log
-    update_log_step(config['DATA-GEN-PARAMS']['dp_log'], video_list[idx], 8)
+    log_step_event(video_name=video_list[idx], dp_step='step_8', new_status=1, db_path=config['DATA-GEN-PARAMS']['dp_log'])
+    update_summary_for_video(video_name=video_list[idx], db_path=config['DATA-GEN-PARAMS']['dp_log'])
+    print(f"Step 8 completed for video {video_list[idx]}.")
 
 
 if __name__ == '__main__':

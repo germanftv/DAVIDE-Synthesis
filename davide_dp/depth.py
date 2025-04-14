@@ -7,10 +7,10 @@ import argparse
 from tqdm import tqdm
 import cupy as cp
 
-import utils
-from XVFI import denorm255_np, RGBframes_np2Tensor
-from configs import read_config
-from utils import  read_depth_bin, read_conf_bin, save_depth_16bits, save_conf_8bits
+from davide_dp.XVFI import denorm255_np, RGBframes_np2Tensor
+from davide_dp.configs import read_config
+from davide_dp.utils.progress_db import is_step_complete, log_step_event, update_summary_for_video
+from davide_dp.utils import  read_depth_bin, read_conf_bin, save_depth_16bits, save_conf_8bits
 
 
 def parse_args(argv):
@@ -31,15 +31,15 @@ def main(argv=None):
 
     # Get root directory and video list
     root_dir = config['DAVIDE-raw']['ROOT']
-    video_list = os.listdir(root_dir)
-    video_list.sort()
+    data_annotations_path = config['DATA-GEN-PARAMS']['annotations']
+    annotations = pd.read_csv(data_annotations_path)
+    video_list = annotations['recording'].values.tolist()
     input_video_dir = os.path.join(root_dir, video_list[idx])
     print('Input video dir: ', input_video_dir)
 
     # Check if step 1 is done
-    if not utils.check_log_step(config['DATA-GEN-PARAMS']['dp_log'], video_list[idx], 1):
-        print('Step 1 is not done yet')
-        return
+    if not is_step_complete(dp_step='step_1', videos=video_list[idx], db_path=config['DATA-GEN-PARAMS']['dp_log']):
+        raise ValueError(f"Step 1 is not done yet for video {video_list[idx]}. Check dp log.")
 
     # Input and output paths
     input_depth_dir = os.path.join(input_video_dir, config['DAVIDE-raw']['depth_folder'])
@@ -87,9 +87,10 @@ def main(argv=None):
             save_depth_16bits(depth, os.path.join(output_depth_dir, file_name))
             save_conf_8bits(conf, os.path.join(output_conf_dir, file_name))
 
-    # Update info log
-    utils.update_log_step(config['DATA-GEN-PARAMS']['dp_log'], video_list[idx], 4)
-
+    # Update dp log
+    log_step_event(video_name=video_list[idx], dp_step='step_4', new_status=1, db_path=config['DATA-GEN-PARAMS']['dp_log'])
+    update_summary_for_video(video_name=video_list[idx], db_path=config['DATA-GEN-PARAMS']['dp_log'])
+    print(f"Step 4 completed for video {video_list[idx]}.")
 
 
 if __name__ == '__main__':

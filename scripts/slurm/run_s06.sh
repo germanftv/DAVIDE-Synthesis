@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH --job-name=SAMPLE-VID
+#SBATCH --job-name=Video-Samples
 # slurm logs
 #SBATCH --output=logs/s06/log_%a.txt
 #SBATCH --error=logs/s06/log_%a.txt
-#
+# slurm settings
 #SBATCH --partition=small
 #SBATCH --time=04:00:00
 #SBATCH --ntasks=1
@@ -13,9 +13,8 @@
 
 # Activate enviroment, export variables
 source ~/env_vars/DAVIDE-DP.sh
-# Load modules
+# Load additional modules
 module load ffmpeg
-module load texlive/texlive
 
 cd ..
-srun bash run_06_sample-videos.sh
+srun bash run_06_sample-videos.sh $SLURM_ARRAY_TASK_ID --config ./davide_dp/configs/config.yaml

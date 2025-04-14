@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH --job-name=CAM_DATA
+#SBATCH --job-name=Extract-CameraData
 # slurm logs
 #SBATCH --output=logs/s05/log_%a.txt
 #SBATCH --error=logs/s05/log_%a.txt
-#
+# slurm settings
 #SBATCH --partition=small
 #SBATCH --time=00:10:00
 #SBATCH --ntasks=1
@@ -15,4 +15,4 @@ module load ffmpeg
 source ~/env_vars/DAVIDE-DP.sh
 
 cd ..
-srun bash run_05_camera_data.sh
+srun bash run_05_camera_data.sh $SLURM_ARRAY_TASK_ID --config ./davide_dp/configs/config.yaml
