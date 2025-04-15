@@ -16,9 +16,10 @@ This project contains the source code to synthesize the Depth-Aware VIdeo DEblur
 ## Contents
 
 1. [Getting Started](#getting-started)
-2. [Camera Response Function](#camera-response-function)
-3. [Other Resources](#other-resources)
-4. [Citation](#citation)
+2. [Dataset Synthesis Pipeline](#dataset-synthesis-pipeline)
+3. [Camera Response Function](#camera-response-function)
+4. [Other Resources](#other-resources)
+5. [Citation](#citation)
 
 ## Getting started
 ### Requirements:
@@ -30,7 +31,8 @@ Ensure the following dependencies are installed and available:
 3. **FFmpeg**: Required for handling video processing tasks. Make sure it is installed and available in your system's PATH.
 > **Note:** Ensure your system meets the following requirements before proceeding:
 > - **CUDA Version**: The minimum supported version is 11.0, which is required by the project's dependencies.
-> - **FFmpeg Configuration**: To execute step 6 (Generate video samples, optional), ensure that FFmpeg includes support for the `drawtext` filter. If necessary, you can compile `ffmpeg` with the [attached configuration](./assets/ffmpeg_config.sh). 
+> - **FFmpeg Configuration**: To execute step 6 (Generate video samples, optional), ensure that FFmpeg includes support for the `drawtext` filter. If necessary, you can compile `ffmpeg` with the [attached configuration](./assets/ffmpeg_config.sh).
+> - **Large Data Storage**: If you aim to process all steps for the entire set of raw captures, ensure you have sufficient disk space available (~ 2TB).
 
 ### Installation:
 1. Install XVFI submodule, which is used for video interpolation:
