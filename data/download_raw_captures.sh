@@ -55,3 +55,6 @@ if [ "$CLEAN" = true ]; then
   rm DAVIDE-raw.zip
   rm DAVIDE-raw_combined.zip
 fi
+
+# Download license file
+curl -u "${USERNAME}:${PASSWORD}" -O "https://davide.rd.tuni.fi/raw-captures/LICENSE.txt"
