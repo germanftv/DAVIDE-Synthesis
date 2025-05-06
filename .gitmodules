@@ -1,3 +1,3 @@
-[submodule "davide-dp/XVFI"]
-	path = davide-dp/XVFI
+[submodule "davide_dp/XVFI"]
+	path = davide_dp/XVFI
 	url = https://github.com/germanftv/XVFI
