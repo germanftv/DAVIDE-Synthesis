@@ -3,8 +3,9 @@
 # This script exports the processed data from the DAVIDE dataset.
 # It requires a CLIP_ID to specify which video to process.
 # Optional arguments include a custom config file.
+# The script also supports a flag for exporting mono depth data.
 # ----------------------------------------------------------------------------------
-# Usage: bash ./scripts/run_08_data_selection.sh <CLIP_ID> [--config <CONFIG_FILE>]
+# Usage: bash ./scripts/run_08_data_selection.sh <CLIP_ID> [--config <CONFIG_FILE>] [--mono_depth]
 # ----------------------------------------------------------------------------------
 
 # Set Clip ID
@@ -32,4 +33,10 @@ if [ -z "$CLIP_ID" ]; then
   exit 1
 fi
 
-python davide_dp/data_selection.py --id $CLIP_ID --config $CONFIG
+MONO_DEPTH_FLAG=""
+if [ "$1" == "--mono_depth" ]; then
+  MONO_DEPTH_FLAG="--mono_depth"
+  shift 1
+fi
+
+python davide_dp/data_selection.py --id $CLIP_ID --config $CONFIG $MONO_DEPTH_FLAG

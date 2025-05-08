@@ -21,6 +21,7 @@ def parse_args(argv):
     parser = argparse.ArgumentParser(description='Generates camera poses, intrinsics, and imu data for video id')
     parser.add_argument("--config", type=str, default='./configs/config.yaml', help='Path to config file')
     parser.add_argument("--id", type=int, required=True, help='Video id')
+    parser.add_argument("--mono_depth", action='store_true', help='Export mono depth folder')
 
     args = parser.parse_args(argv)
     return args
@@ -308,6 +309,9 @@ def main(argv):
         if step == 6:
             # Step 6 is not required for this script
             continue
+        if step == 7 and not args.mono_depth:
+            # Step 7 is not required if mono depth is not required
+            continue
         if not is_step_complete(dp_step='step_{}'.format(step), videos=video_list[idx], db_path=config['DATA-GEN-PARAMS']['dp_log']):
             raise ValueError(f"Step {step} is not done yet for video {video_list[idx]}. Check dp log.")
 
@@ -355,11 +359,13 @@ def main(argv):
     export_poses(start_id, end_id, input_video_dir, output_root_dir, recording_name, config)
     # Export imu data
     export_imu_data(start_id, end_id, input_video_dir, output_root_dir, recording_name, config)
-    # Export mono depth folder
-    rgb_dir = 'sharp'
-    export_mono_depth_folder(start_id, end_id, input_video_dir, output_root_dir, recording_name, config, rgb_dir)
-    rgb_dir = 'blur'
-    export_mono_depth_folder(start_id, end_id, input_video_dir, output_root_dir, recording_name, config, rgb_dir)
+    # Export mono depth folder if required
+    if args.mono_depth:
+        print('Exporting mono depth folders...')
+        rgb_dir = 'sharp'
+        export_mono_depth_folder(start_id, end_id, input_video_dir, output_root_dir, recording_name, config, rgb_dir)
+        rgb_dir = 'blur'
+        export_mono_depth_folder(start_id, end_id, input_video_dir, output_root_dir, recording_name, config, rgb_dir)
 
     # Update log
     log_step_event(video_name=video_list[idx], dp_step='step_8', new_status=1, db_path=config['DATA-GEN-PARAMS']['dp_log'])

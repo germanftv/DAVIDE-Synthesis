@@ -203,4 +203,4 @@ rm -r "$ROOT/$VIDEO/$samples_folder/$colored_depth_folder"
 # -------------------- Register the Step 6 in the DP log--------------------
 STEP=6
 python davide_dp/update_db.py --dp_log $DP_LOG --recording $VIDEO --step $STEP
-echo "Sample videos for $VIDEO are done"
+echo "Step 6 completed for video $VIDEO"

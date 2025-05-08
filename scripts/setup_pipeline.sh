@@ -7,7 +7,7 @@
 # Note: The database intends to log the processing steps. The database is initialized
 #       based on the annotations file provided in the config file.
 # ----------------------------------------------------------------------------------
-# Usage: bash ./scripts/setup_pipeline.sh <DATA_WORKSPACE_PATH> [--init_db] [--config <CONFIG_FILE>]
+# Usage: bash ./scripts/setup_pipeline.sh <DATA_WORKSPACE_PATH> [--config <CONFIG_FILE>] [--init_db]
 # ----------------------------------------------------------------------------------
 
 # Set DATA_WORKSPACE
@@ -17,16 +17,7 @@ echo "DATA_WORKSPACE: $DATA_WORKSPACE_PATH"
 
 # Test conda activation
 if ! conda activate DAVIDE-DP; then
-  source activate DAVIDE-DP
-  conda deactivate
-  if ! conda activate DAVIDE-DP; then
-    echo "Error: Failed to activate conda environment DAVIDE-DP."
-    exit 1
-  else
-    conda deactivate
-  fi
-else
-  conda deactivate
+  source "$HOME/miniconda3/etc/profile.d/conda.sh"
 fi
 
 # Install davide_dp python package

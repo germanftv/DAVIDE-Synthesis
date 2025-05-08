@@ -14,5 +14,5 @@ module load ffmpeg
 # Activate enviroment, export variables
 source ~/env_vars/DAVIDE-DP.sh
 
-cd ..
-srun bash run_05_camera_data.sh $SLURM_ARRAY_TASK_ID --config ./davide_dp/configs/config.yaml
+cd ../..
+srun bash scripts/run_05_camera_data.sh $SLURM_ARRAY_TASK_ID --config ./davide_dp/configs/config.yaml

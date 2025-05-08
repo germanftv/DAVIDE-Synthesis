@@ -155,7 +155,7 @@ def main(argv=None):
     # Update dp log
     log_step_event(video_name=video_list[idx], dp_step='step_3', new_status=1, db_path=config['DATA-GEN-PARAMS']['dp_log'])
     update_summary_for_video(video_name=video_list[idx], db_path=config['DATA-GEN-PARAMS']['dp_log'])
-    print(f"Step 2 completed for video {video_list[idx]}.")
+    print(f"Step 3 completed for video {video_list[idx]}.")
 
 
 if __name__ == '__main__':

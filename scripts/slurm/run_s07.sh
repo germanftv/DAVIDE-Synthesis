@@ -5,7 +5,7 @@
 #SBATCH --error=logs/s07/log_%a.txt
 # slurm settings
 #SBATCH --partition=gpu
-#SBATCH --time=14:00:00
+#SBATCH --time=20:00:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=16000
@@ -17,5 +17,5 @@ module load cuda
 # Activate enviroment, export variables
 source ~/env_vars/DAVIDE-MONO.sh
 
-cd ..
+cd ../..
 srun bash scripts/run_07_mono_depth.sh $SLURM_ARRAY_TASK_ID --config ./davide_dp/configs/config.yaml

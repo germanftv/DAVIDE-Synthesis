@@ -56,5 +56,5 @@ ffmpeg -y -i $INPUT_PATH -start_number 0 $OUTPUT_PATH
 
 # Register the Step 1 in the DP log
 python davide_dp/update_db.py --dp_log $DP_LOG --recording $VIDEO --step $STEP
-echo "RGB extraction for $VIDEO is done"
+echo "Step 1 completed for video $VIDEO"
 
