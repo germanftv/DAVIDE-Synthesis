@@ -1,5 +1,5 @@
 # DAVIDE - Dataset Synthesis
-[![Project Page](https://img.shields.io/badge/Project%20Page-DAVIDE-blue)](https://germanftv.github.io/ParallaxICB.github.io/)
+[![Project Page](https://img.shields.io/badge/Project%20Page-DAVIDE-blue)](https://germanftv.github.io/DAVIDE.github.io/)
 [![arXiv](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2409.01274)
 
 
