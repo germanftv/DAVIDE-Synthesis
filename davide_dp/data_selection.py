@@ -31,7 +31,6 @@ def get_frame_ids(start, end, input_video_dir, config):
     """Get frame ids from start and end annotations."""
     blur_dir = os.listdir(os.path.join(input_video_dir, config['DAVIDE-tmp']['blur_folder']))
     blur_dir.sort()
-    print
     frame_ids = np.asarray([int(os.path.splitext(file)[0]) for file in blur_dir])
 
     # Check if start and end are not zero
@@ -299,8 +298,9 @@ def main(argv):
 
     # Get root directory and video list
     input_root = config['DAVIDE-tmp']['ROOT']
-    video_list = os.listdir(input_root)
-    video_list.sort()
+    data_annotations_path = config['DATA-GEN-PARAMS']['annotations']
+    annotations = pd.read_csv(data_annotations_path)
+    video_list = annotations['recording'].values.tolist()
     input_video_dir = os.path.join(input_root, video_list[idx])
     print('Input video dir: ', input_video_dir)
 
